@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  ai-screen:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-screen-4005
+    ports:
+      - "4005:80"
+    restart: unless-stopped
