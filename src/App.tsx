@@ -35,6 +35,11 @@ interface AgendaItem {
   title: string;
   description?: string;
   speaker?: string;
+  participants?: {
+    role: string;
+    name: string;
+    title: string;
+  }[];
   status: 'past' | 'current' | 'upcoming';
 }
 
@@ -46,48 +51,55 @@ const AGENDA_DATA: Omit<AgendaItem, 'status'>[] = [
   { 
     time: '14:00-14:05', 
     title: '主持人开场', 
-    speaker: '吴华章 | 广西壮族自治区医保局副局长',
+    speaker: '姚方 | 广西壮族自治区医疗保障局副局长',
     description: '介绍到场领导嘉宾、宣讲会背景及议程说明。'
   },
   { 
-    time: '14:05-14:10', 
-    title: '主办单位致辞', 
+    time: '14:05-14:15', 
+    title: '国家医疗保障局致辞', 
     speaker: '付超奇 | 国家医疗保障局大数据中心主任',
-    description: '以场景开放推动技术创新 促进医保数智化发展'
+    description: '主题：以场景开放推动技术创新 促进医保数智化发展'
   },
   { 
-    time: '14:10-14:15', 
-    title: '承办单位致辞', 
-    speaker: '张 奕 | 广西壮族自治区医保局局长',
-    description: '大赛总体情况介绍及参赛项目在广西的应用落地和孵化展望'
+    time: '14:15-14:25', 
+    title: '广西壮族自治区医疗保障局致辞', 
+    speaker: '张 奕 | 广西壮族自治区医疗保障局局长',
+    description: '主题：依托医保影像云与智能推理能力 推进大赛筹备工作与医疗AI创新应用发展'
   },
   { 
-    time: '14:15-14:35', 
+    time: '14:25-14:45', 
     title: '专题报告', 
-    speaker: '滕皋军 | 中国科学院院士',
-    description: '可信空间与云影像体系赋能医保智能监管的技术路径'
+    speaker: '滕皋军 | 中国科学院院士，东南大学医学与生命科学部主任，东南大学附属中大医院院长',
+    description: '主题：可信空间与云影像体系赋能医保智能监管的技术路径'
   },
   { 
-    time: '14:35-14:55', 
+    time: '14:45-15:05', 
     title: '专题报告', 
-    speaker: '待 定 | 科大讯飞',
-    description: 'AI技术在医学影像领域的应用和市场'
+    speaker: '鹿晓亮 | 科大讯飞股份有限公司副总裁、讯飞医疗执行总裁',
+    description: '主题：人工智能在医学影像中的应用'
   },
   { 
-    time: '14:55-15:20', 
+    time: '15:05-15:25', 
     title: '赛制解读', 
     speaker: '彭 涛 | 广西医科大学第一附属医院副院长',
-    description: '赛事解读和影像数据集建设'
+    description: '主题：赛事解读和影像数据集建设'
   },
   { 
-    time: '15:20-15:50', 
+    time: '15:25-15:50', 
     title: '茶歇及媒体专访'
   },
   { 
     time: '15:50-16:30', 
     title: '圆桌研讨', 
-    speaker: '薛华丹 | 北京协和医院放射科副主任',
-    description: '主题：医疗数字治理体系重构：技术、制度与协同创新'
+    description: '主题：医疗数字治理体系重构：技术、制度与协同创新',
+    participants: [
+      { role: '主持人', name: '薛华丹', title: '北京协和医院放射科副主任' },
+      { role: '医疗专家', name: '陈  敏', title: '北京医院医学影像中心主任、中华医学会放射学分会主任委员' },
+      { role: '医疗专家', name: '张  波', title: '中日友好医院超声医学科主任' },
+      { role: '行业专家', name: '郑  超', title: '数坤科技股份有限公司CTO' },
+      { role: '行业专家', name: '董  昢', title: '上海联影智能医疗科技有限公司CTO' },
+      { role: '行业专家', name: '王  桐', title: '阿里巴巴达摩院医疗AI实验室商务合作副总经理' }
+    ]
   },
   { 
     time: '16:30-17:00', 
@@ -154,7 +166,7 @@ const Background = () => (
   <div className="absolute inset-0 pointer-events-none overflow-hidden">
     {/* Placeholder Background Image - Replace URL here */}
     <img 
-      src="/blue-bg-9-16-2.png" 
+      src="/北京宣讲会互动大屏bg.png" 
       alt="Background" 
       className="absolute inset-0 w-full h-full object-cover opacity-100 scale-100"
       referrerPolicy="no-referrer"
@@ -281,7 +293,7 @@ const Home = ({ onNavigate }: { onNavigate: (s: Section) => void }) => {
           <p className="text-xl text-white uppercase tracking-[0.3em]">Beijing · Guangxi Hotel</p>
         </div>
         
-        <div className="py-6 bg-white/16 rounded-[30px] border border-white/35 backdrop-blur-md">
+        <div className="w-[calc(100%+6rem)] -mx-12 py-6 bg-white/16 rounded-none border-0 backdrop-blur-md translate-y-28">
           <div className="text-9xl font-black text-white font-mono tracking-tighter drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
             {time.toLocaleTimeString('zh-CN', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })}
           </div>
@@ -615,6 +627,22 @@ const Announcement = () => {
 
 
 const Agenda = () => {
+  const normalizeParticipants = (item: Omit<AgendaItem, 'status'>) => {
+    if (item.participants?.length) return item.participants;
+    if (!item.speaker) return [];
+
+    const [leftRaw, rightRaw] = item.speaker.split('|');
+    const left = leftRaw?.trim() || '';
+    const title = rightRaw?.trim() || '特邀嘉宾';
+
+    if (left.includes('：')) {
+      const [role, name] = left.split('：');
+      return [{ role: role.trim(), name: name?.trim() || '嘉宾', title }];
+    }
+
+    return [{ role: '嘉宾', name: left || '嘉宾', title }];
+  };
+
   const getAgendaStatus = (timeRange: string): 'past' | 'current' | 'upcoming' => {
     const now = new Date();
     const eventDateStr = '2026-03-31';
@@ -698,19 +726,31 @@ const Agenda = () => {
                     {item.title}
                   </h3>
                   
-                  {item.speaker && (
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md inline-block min-w-[500px]">
-                      <div className="text-3xl font-bold text-white/90 mb-2">
-                        {item.speaker.split('|')[0].trim()}
-                      </div>
-                      <div className="text-xl text-white/40 font-medium">
-                        {item.speaker.split('|')[1]?.trim() || '特邀嘉宾'}
-                      </div>
+                  {normalizeParticipants(item).length > 0 && (
+                    <div className="space-y-3 min-w-[500px] max-w-[800px]">
+                      {normalizeParticipants(item).map((person, personIdx) => (
+                        <div
+                          key={`${person.name}-${personIdx}`}
+                          className="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-md"
+                        >
+                          {item.participants?.length ? (
+                            <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/40 text-blue-200 text-sm font-bold tracking-wide mb-3">
+                              {person.role}
+                            </div>
+                          ) : null}
+                          <div className="text-3xl font-bold text-white/90 mb-2">
+                            {person.name}
+                          </div>
+                          <div className="text-2xl text-white/80 font-medium leading-relaxed">
+                            {person.title}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   )}
 
                   {item.description && (
-                    <div className="text-2xl text-white/60 leading-relaxed max-w-[800px]">
+                    <div className="text-[30px] text-white/85 leading-relaxed max-w-[800px]">
                       {item.description}
                     </div>
                   )}
