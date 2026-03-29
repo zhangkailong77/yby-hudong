@@ -57,7 +57,7 @@ const AGENDA_DATA: Omit<AgendaItem, 'status'>[] = [
   { 
     time: '14:05-14:15', 
     title: '国家医疗保障局致辞', 
-    speaker: '付超奇 | 国家医疗保障局大数据中心主任',
+    speaker: '曹文博 | 国家医疗保障局大数据中心副主任',
     description: '主题：以场景开放推动技术创新 促进医保数智化发展'
   },
   { 
@@ -82,7 +82,7 @@ const AGENDA_DATA: Omit<AgendaItem, 'status'>[] = [
     time: '15:05-15:25', 
     title: '赛制解读', 
     speaker: '彭 涛 | 广西医科大学第一附属医院副院长',
-    description: '主题：赛事解读和影像数据集建设'
+    description: '主题：赛事解读和高质量影像数据集建设'
   },
   { 
     time: '15:25-15:50', 
@@ -643,28 +643,6 @@ const Agenda = () => {
     return [{ role: '嘉宾', name: left || '嘉宾', title }];
   };
 
-  const getAgendaStatus = (timeRange: string): 'past' | 'current' | 'upcoming' => {
-    const now = new Date();
-    const eventDateStr = '2026-03-31';
-    const [startStr, endStr] = timeRange.split('-');
-    
-    // Create dates for comparison
-    const targetDate = new Date(eventDateStr);
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const eventDay = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
-
-    if (today < eventDay) return 'upcoming';
-    if (today > eventDay) return 'past';
-
-    // It's the event day, check the time
-    const startTime = new Date(`${eventDateStr}T${startStr.trim()}:00`);
-    const endTime = new Date(`${eventDateStr}T${endStr.trim()}:00`);
-    
-    if (now > endTime) return 'past';
-    if (now >= startTime && now <= endTime) return 'current';
-    return 'upcoming';
-  };
-
   return (
     <div className="h-full flex flex-col pt-32 pb-40 px-8 relative z-10">
       <div className="flex items-center space-x-4 mb-12">
@@ -691,28 +669,24 @@ const Agenda = () => {
       <div className="flex-1 overflow-y-auto no-scrollbar relative">
         <div className="space-y-20 pl-24">
           {AGENDA_DATA.map((item, idx) => {
-            const status = getAgendaStatus(item.time);
             return (
               <motion.div 
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.05 }}
-                className={`flex items-start ${status === 'past' ? 'opacity-30' : ''}`}
+                className="flex items-start"
               >
                 {/* Left: Time */}
                 <div className="w-64 pt-1 flex-shrink-0 text-right pr-12">
-                  <span className={`text-4xl font-mono font-bold whitespace-nowrap ${status === 'current' ? 'text-blue-400' : 'text-white/70'}`}>
+                  <span className="text-4xl font-mono font-bold whitespace-nowrap text-white/70">
                     {item.time}
                   </span>
                 </div>
 
                 {/* Middle: Dot & Line */}
                 <div className="relative flex flex-col items-center px-6 pt-4">
-                  <div className={`w-5 h-5 rounded-full z-10 ${
-                    status === 'current' ? 'bg-blue-400 shadow-[0_0_20px_rgba(96,165,250,0.8)] scale-125' : 
-                    'bg-white/20'
-                  }`} />
+                  <div className="w-5 h-5 rounded-full z-10 bg-white/20" />
                   {idx !== AGENDA_DATA.length - 1 && (
                     <div className="absolute top-9 w-[1px] h-40 bg-white/10" />
                   )}
@@ -720,9 +694,7 @@ const Agenda = () => {
 
                 {/* Right: Content */}
                 <div className="flex-1 space-y-6">
-                  <h3 className={`text-4xl font-bold leading-snug ${
-                    status === 'current' ? 'text-blue-400' : 'text-white'
-                  }`}>
+                  <h3 className="text-4xl font-bold leading-snug text-white">
                     {item.title}
                   </h3>
                   
@@ -752,13 +724,6 @@ const Agenda = () => {
                   {item.description && (
                     <div className="text-[30px] text-white/85 leading-relaxed max-w-[800px]">
                       {item.description}
-                    </div>
-                  )}
-
-                  {status === 'current' && (
-                    <div className="inline-flex items-center px-5 py-2 bg-blue-500/20 border border-blue-500/50 rounded-full">
-                      <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse mr-3" />
-                      <span className="text-blue-400 text-lg font-bold uppercase tracking-wider">进行中</span>
                     </div>
                   )}
                 </div>
@@ -913,7 +878,7 @@ const Tracks = () => {
                       <h3 className="text-4xl font-bold text-white tracking-wide">{track.title}</h3>
                       {isEven && <div className="w-8 h-[2px] bg-blue-500" />}
                     </div>
-                    <p className="text-xl text-white/70 leading-relaxed font-light line-clamp-2">
+                    <p className="w-full text-left text-xl text-white/70 leading-relaxed font-light line-clamp-3">
                       {track.desc}
                     </p>
                     {/* <div className="pt-2 flex items-center text-white/90 text-lg font-medium group cursor-pointer">
