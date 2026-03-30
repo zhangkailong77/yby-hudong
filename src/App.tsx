@@ -63,7 +63,7 @@ const AGENDA_DATA: Omit<AgendaItem, 'status'>[] = [
   { 
     time: '14:15-14:25', 
     title: '广西壮族自治区医疗保障局致辞', 
-    speaker: '张 奕 | 广西壮族自治区医疗保障局局长',
+    speaker: '张 奕 | 广西壮族自治区医疗保障局党组书记、局长',
     description: '主题：依托医保影像云与智能推理能力 推进大赛筹备工作与医疗AI创新应用发展'
   },
   { 
@@ -97,7 +97,7 @@ const AGENDA_DATA: Omit<AgendaItem, 'status'>[] = [
       { role: '医疗专家', name: '陈  敏', title: '北京医院医学影像中心主任、中华医学会放射学分会主任委员' },
       { role: '医疗专家', name: '张  波', title: '中日友好医院超声医学科主任' },
       { role: '行业专家', name: '郑  超', title: '数坤科技股份有限公司CTO' },
-      { role: '行业专家', name: '董  昢', title: '上海联影智能医疗科技有限公司CTO' },
+      { role: '行业专家', name: '董  昢', title: '上海联影智能科技股份有限公司CTO' },
       { role: '行业专家', name: '王  桐', title: '阿里巴巴达摩院医疗AI实验室商务合作副总经理' }
     ]
   },
