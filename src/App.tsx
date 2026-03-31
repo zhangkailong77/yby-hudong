@@ -46,13 +46,13 @@ interface AgendaItem {
 const AGENDA_DATA: Omit<AgendaItem, 'status'>[] = [
   { 
     time: '13:30-14:00', 
-    title: '签到、媒体接待、领导嘉宾合影'
+    title: '签到、媒体接待'
   },
   { 
     time: '14:00-14:05', 
     title: '主持人开场', 
-    speaker: '姚方 | 广西壮族自治区医疗保障局副局长',
-    description: '介绍到场领导嘉宾、宣讲会背景及议程说明。'
+    speaker: '姚方 | 广西壮族自治区医疗保障局党组成员、副局长',
+    description: '介绍到场领导嘉宾、宣讲会背景及议程说明'
   },
   { 
     time: '14:05-14:15', 
@@ -98,7 +98,7 @@ const AGENDA_DATA: Omit<AgendaItem, 'status'>[] = [
       { role: '医疗专家', name: '张  波', title: '中日友好医院超声医学科主任' },
       { role: '行业专家', name: '郑  超', title: '数坤科技股份有限公司CTO' },
       { role: '行业专家', name: '董  昢', title: '上海联影智能科技股份有限公司CTO' },
-      { role: '行业专家', name: '王  桐', title: '阿里巴巴达摩院医疗AI实验室商务合作副总经理' }
+      { role: '行业专家', name: '王  桐', title: '阿里巴巴达摩院医疗AI实验室副总经理' }
     ]
   },
   { 
