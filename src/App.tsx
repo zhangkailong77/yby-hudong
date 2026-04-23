@@ -27,6 +27,7 @@ import {
 const BASE_WIDTH = 1080;
 const BASE_HEIGHT = 1920;
 const AUTO_RETURN_TIMEOUT = 180000; // 3 minutes
+const MOBILE_BREAKPOINT = 768;
 
 type Section = 'home' | 'announcement' | 'agenda' | 'guide' | 'tracks';
 
@@ -122,46 +123,76 @@ const TRACKS = [
 
 const ScaleWrapper = ({ children }: { children: React.ReactNode }) => {
   const [scale, setScale] = useState(1);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [viewport, setViewport] = useState({ width: BASE_WIDTH, height: BASE_HEIGHT });
 
   const handleResize = useCallback(() => {
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-    const windowRatio = windowWidth / windowHeight;
-    const baseRatio = BASE_WIDTH / BASE_HEIGHT;
+    const visualViewport = window.visualViewport;
+    const windowWidth = visualViewport?.width ?? window.innerWidth;
+    const windowHeight = visualViewport?.height ?? window.innerHeight;
+    const isMobileViewport = windowWidth <= MOBILE_BREAKPOINT;
 
-    let newScale = 1;
-    if (windowRatio > baseRatio) {
-      // Window is wider than 9:16, scale based on height
-      newScale = windowHeight / BASE_HEIGHT;
-    } else {
-      // Window is narrower than 9:16, scale based on width
-      newScale = windowWidth / BASE_WIDTH;
-    }
+    const newScale = isMobileViewport
+      ? windowWidth / BASE_WIDTH
+      : Math.min(windowWidth / BASE_WIDTH, windowHeight / BASE_HEIGHT);
+
     setScale(newScale);
+    setViewport({ width: windowWidth, height: windowHeight });
+    document.documentElement.style.setProperty('--app-height', `${windowHeight}px`);
   }, []);
 
   useEffect(() => {
     handleResize();
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.visualViewport?.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.visualViewport?.removeEventListener('resize', handleResize);
+    };
   }, [handleResize]);
 
+  const scaledWidth = BASE_WIDTH * scale;
+  const scaledHeight = BASE_HEIGHT * scale;
+  const isMobileViewport = viewport.width <= MOBILE_BREAKPOINT;
+  const extraBottomFillDesignPx = scale > 0
+    ? Math.max(viewport.height - scaledHeight, 0) / scale
+    : 0;
+
   return (
-    <div 
-      className="fixed inset-0 bg-transparent flex items-start justify-start overflow-hidden origin-top-left"
-      style={{ width: '100vw', height: '100vh' }}
+    <div
+      className="fixed inset-0 overflow-hidden"
+      style={{
+        width: '100%',
+        height: 'var(--app-height, 100dvh)',
+        backgroundColor: '#031d72',
+      }}
     >
-      <div 
-        ref={containerRef}
-        className="relative bg-transparent text-white origin-top-left"
-        style={{ 
-          width: BASE_WIDTH, 
-          height: BASE_HEIGHT,
-          transform: `scale(${scale})`,
+      <div
+        className="h-full w-full overflow-x-hidden"
+        style={{
+          overflowY: isMobileViewport && scaledHeight > viewport.height ? 'auto' : 'hidden',
         }}
       >
-        {children}
+        <div
+          className="relative mx-auto"
+          style={{
+            width: scaledWidth,
+            height: scaledHeight,
+            minHeight: scaledHeight,
+          }}
+        >
+          <div
+            className="relative origin-top-left bg-transparent text-white"
+            style={{
+              width: BASE_WIDTH,
+              height: BASE_HEIGHT,
+              transform: `scale(${scale})`,
+              ['--clock-bottom-fill' as string]: `${extraBottomFillDesignPx}px`,
+            }}
+          >
+            {children}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -298,7 +329,12 @@ const Home = ({ onNavigate }: { onNavigate: (s: Section) => void }) => {
           <p className="text-xl text-white uppercase tracking-[0.3em]">Shanghai · Pudong Zhangjiang Grand Metropark Hotel</p>
         </div>
         
-        <div className="w-[calc(100%+6rem)] -mx-12 py-6 bg-white/16 rounded-none border-0 backdrop-blur-md translate-y-28">
+        <div
+          className="w-[calc(100%+6rem)] -mx-12 pt-6 bg-white/16 rounded-none border-0 backdrop-blur-md translate-y-28"
+          style={{
+            paddingBottom: `calc(1.5rem + var(--clock-bottom-fill, 0px))`,
+          }}
+        >
           <div className="text-9xl font-black text-white font-mono tracking-tighter drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
             {time.toLocaleTimeString('zh-CN', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })}
           </div>
