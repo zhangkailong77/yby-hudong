@@ -51,58 +51,63 @@ const AGENDA_DATA: Omit<AgendaItem, 'status'>[] = [
   { 
     time: '14:00-14:05', 
     title: '主持人开场', 
-    speaker: '姚方 | 广西壮族自治区医疗保障局党组成员、副局长',
+    speaker: '吴华章 | 广西壮族自治区医疗保障局党组成员、副局长',
     description: '介绍到场领导嘉宾、宣讲会背景及议程说明'
   },
   { 
     time: '14:05-14:15', 
-    title: '国家医疗保障局致辞', 
-    speaker: '曹文博 | 国家医疗保障局大数据中心副主任',
-    description: '主题：以场景开放推动技术创新 促进医保数智化发展'
+    title: '广西壮族自治区医疗保障局致辞', 
+    speaker: '吴华章 | 广西壮族自治区医疗保障局党组成员、副局长',
+    description: '主题：以赛聚智促转化 以用促新谋发展'
   },
   { 
     time: '14:15-14:25', 
-    title: '广西壮族自治区医疗保障局致辞', 
-    speaker: '张 奕 | 广西壮族自治区医疗保障局党组书记、局长',
-    description: '主题：依托医保影像云与智能推理能力 推进大赛筹备工作与医疗AI创新应用发展'
+    title: '上海市医疗保障局致辞', 
+    speaker: '周小平 | 上海市医疗保障局党组成员、副局长',
+    description: '主题：科创引领应用转化 智慧赋能医保治理'
   },
   { 
     time: '14:25-14:45', 
-    title: '专题报告', 
-    speaker: '滕皋军 | 中国科学院院士，东南大学医学与生命科学部主任，东南大学附属中大医院院长',
-    description: '主题：可信空间与云影像体系赋能医保智能监管的技术路径'
+    title: '主旨报告', 
+    speaker: '刘士远 | 中华医学会放射学会主任委员，上海长征医院放射诊断科主任',
+    description: '主题：医学影像大模型研发现状与挑战'
   },
   { 
     time: '14:45-15:05', 
-    title: '专题报告', 
-    speaker: '鹿晓亮 | 科大讯飞股份有限公司副总裁、讯飞医疗执行总裁',
-    description: '主题：人工智能在医学影像中的应用'
+    title: '赛制解读', 
+    speaker: '庞 军 | 全国医保影像AI识图大赛组委会办公室副主任、广西医疗保险研究会会长',
+    description: '主题：以赛促用 以用促建 ———— 大赛解读与广西场景应用实践'
   },
   { 
     time: '15:05-15:25', 
-    title: '赛制解读', 
-    speaker: '彭 涛 | 广西医科大学第一附属医院副院长',
-    description: '主题：赛事解读和高质量影像数据集建设'
+    title: '主旨报告', 
+    speaker: '张少霞 | 商汤医疗CEO，上海交通大学清源研究院执行院长',
+    description: '主题：医疗多模态通专融合范式：基础模型驱动下的全场景诊疗革新'
   },
   { 
-    time: '15:25-15:50', 
+    time: '15:25-15:45', 
     title: '茶歇及媒体专访'
   },
   { 
-    time: '15:50-16:30', 
-    title: '圆桌研讨', 
-    description: '主题：医疗数字治理体系重构：技术、制度与协同创新',
-    participants: [
-      { role: '主持人', name: '薛华丹', title: '北京协和医院放射科副主任' },
-      { role: '医疗专家', name: '陈  敏', title: '北京医院医学影像中心主任、中华医学会放射学分会主任委员' },
-      { role: '医疗专家', name: '张  波', title: '中日友好医院超声医学科主任' },
-      { role: '行业专家', name: '郑  超', title: '数坤科技股份有限公司CTO' },
-      { role: '行业专家', name: '董  昢', title: '上海联影智能科技股份有限公司CTO' },
-      { role: '行业专家', name: '王  桐', title: '阿里巴巴达摩院医疗AI实验室副总经理' }
-    ]
+    time: '15:45-16:05', 
+    title: '主旨报告', 
+    speaker: '施 俊 | 上海大学通信与信息工程学院副院长、教授、博导，上海市东方英才（拔尖）',
+    description: '主题：超图基础模型在医学影像中的应用研究'
   },
   { 
-    time: '16:30-17:00', 
+    time: '16:05-16:25', 
+    title: '主旨报告', 
+    speaker: '陈华平 | 奇安信科技集团股份有限公司创始合伙人、副总裁，全国工商联网络与数据安全委员会秘书长',
+    description: '主题：医学数据安全————守护医疗AI创新的信任基石'
+  },
+  { 
+    time: '16:25-16:45', 
+    title: '主旨报告', 
+    speaker: '霍 权 | 上海联影智能科技股份有限公司智能业务副总裁，上海市人工智能高级工程师',
+    description: '主题：大模型驱动下的影像AI：技术创新与实践'
+  },
+  { 
+    time: '16:45-17:00', 
     title: '现场交流与总结闭幕'
   },
 ];
@@ -166,7 +171,7 @@ const Background = () => (
   <div className="absolute inset-0 pointer-events-none overflow-hidden">
     {/* Placeholder Background Image - Replace URL here */}
     <img 
-      src="/北京宣讲会互动大屏bg.png" 
+      src="/上海宣讲会互动大屏bg.png" 
       alt="Background" 
       className="absolute inset-0 w-full h-full object-cover opacity-100 scale-100"
       referrerPolicy="no-referrer"
@@ -217,7 +222,7 @@ const Home = ({ onNavigate }: { onNavigate: (s: Section) => void }) => {
         <h1 className="text-4xl font-black leading-tight text-white drop-shadow-2xl tracking-tight flex items-center justify-center gap-4">
           <span>宣讲会</span>
           <span className="text-white/75">·</span>
-          <span>北京站</span>
+          <span>上海站</span>
         </h1>
         <div className="flex items-center justify-center space-x-6">
           <div className="h-[2px] w-24 bg-gradient-to-r from-transparent to-blue-400" />
@@ -231,7 +236,7 @@ const Home = ({ onNavigate }: { onNavigate: (s: Section) => void }) => {
       <div className="grid grid-cols-2 gap-12 py-12 w-fit">
         {[
           { id: 'announcement', label: '大赛公告', sub: 'ANNOUNCEMENT', icon: FileText, color: 'blue' },
-          { id: 'agenda', label: '北京站议程', sub: 'AGENDA', icon: Clock, color: 'blue' },
+          { id: 'agenda', label: '上海站议程', sub: 'AGENDA', icon: Clock, color: 'blue' },
           { id: 'guide', label: '参赛指引', sub: 'GUIDE', icon: UserCheck, color: 'blue' },
           { id: 'tracks', label: '赛道介绍', sub: 'TRACKS', icon: Trophy, color: 'blue' },
         ].map((item, idx) => (
@@ -289,8 +294,8 @@ const Home = ({ onNavigate }: { onNavigate: (s: Section) => void }) => {
         className="w-full text-center space-y-6"
       >
         <div className="space-y-2">
-          <p className="text-4xl text-white font-medium tracking-wide">中国 · 北京 · 广西大厦</p>
-          <p className="text-xl text-white uppercase tracking-[0.3em]">Beijing · Guangxi Hotel</p>
+          <p className="text-4xl text-white font-medium tracking-wide">中国 · 上海 · 上海浦东张江维景国际酒店</p>
+          <p className="text-xl text-white uppercase tracking-[0.3em]">Shanghai · Pudong Zhangjiang Grand Metropark Hotel</p>
         </div>
         
         <div className="w-[calc(100%+6rem)] -mx-12 py-6 bg-white/16 rounded-none border-0 backdrop-blur-md translate-y-28">
@@ -647,21 +652,21 @@ const Agenda = () => {
     <div className="h-full flex flex-col pt-32 pb-40 px-8 relative z-10">
       <div className="flex items-center space-x-4 mb-12">
         <div className="w-2 h-12 bg-blue-500 rounded-full" />
-        <h2 className="text-6xl font-bold">北京站议程</h2>
+        <h2 className="text-6xl font-bold">上海站议程</h2>
       </div>
 
       <div className="bg-blue-500/10 border border-blue-500/20 rounded-3xl p-10 mb-16 backdrop-blur-md space-y-8">
         <div className="flex items-center">
           <Clock className="w-10 h-10 mr-6 text-blue-400" />
           <div className="text-4xl text-white font-bold tracking-wide">
-            2026年3月31日 14:00 – 17:00
+            2026年4月23日 14:00 – 17:00
           </div>
         </div>
         <div className="flex items-start">
           <MapPin className="w-10 h-10 mr-6 text-blue-400 mt-1" />
           <div className="text-4xl text-white font-bold tracking-wide leading-snug">
-            广西大厦二楼多功能厅
-            <div className="text-2xl text-white/40 font-normal mt-2">北京市朝阳区潘家园华威里26号</div>
+            上海浦东张江维景国际酒店
+            <div className="text-2xl text-white/40 font-normal mt-2">上海市浦东新区祖冲之路2299号</div>
           </div>
         </div>
       </div>
