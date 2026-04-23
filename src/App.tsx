@@ -121,7 +121,13 @@ const TRACKS = [
 
 // --- Components ---
 
-const ScaleWrapper = ({ children }: { children: React.ReactNode }) => {
+const ScaleWrapper = ({
+  children,
+  currentSection,
+}: {
+  children: React.ReactNode;
+  currentSection: Section;
+}) => {
   const [scale, setScale] = useState(1);
   const [viewport, setViewport] = useState({ width: BASE_WIDTH, height: BASE_HEIGHT });
 
@@ -165,10 +171,19 @@ const ScaleWrapper = ({ children }: { children: React.ReactNode }) => {
         width: '100%',
         height: 'var(--app-height, 100dvh)',
         backgroundColor: '#031d72',
+        backgroundImage:
+          currentSection !== 'home' ? 'url("/上海宣讲会互动大屏bg.png")' : undefined,
+        backgroundRepeat: currentSection !== 'home' ? 'no-repeat' : undefined,
+        backgroundPosition: currentSection !== 'home' ? 'center bottom' : undefined,
+        backgroundSize: currentSection !== 'home' ? 'cover' : undefined,
       }}
     >
+      {currentSection !== 'home' && (
+        <div className="absolute inset-0 bg-black/35 pointer-events-none z-[1]" />
+      )}
+
       <div
-        className="h-full w-full overflow-x-hidden"
+        className="relative z-[2] h-full w-full overflow-x-hidden"
         style={{
           overflowY: isMobileViewport && scaledHeight > viewport.height ? 'auto' : 'hidden',
         }}
@@ -198,15 +213,16 @@ const ScaleWrapper = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const Background = () => (
+const Background = ({ currentSection }: { currentSection: Section }) => (
   <div className="absolute inset-0 pointer-events-none overflow-hidden">
-    {/* Placeholder Background Image - Replace URL here */}
-    <img 
-      src="/上海宣讲会互动大屏bg.png" 
-      alt="Background" 
-      className="absolute inset-0 w-full h-full object-cover opacity-100 scale-100"
-      referrerPolicy="no-referrer"
-    />
+    {currentSection === 'home' && (
+      <img 
+        src="/上海宣讲会互动大屏bg.png" 
+        alt="Background" 
+        className="absolute inset-0 w-full h-full object-cover opacity-100 scale-100"
+        referrerPolicy="no-referrer"
+      />
+    )}
     
     {/* Grid Effect */}
     <div className="absolute inset-0 opacity-5" 
@@ -1075,12 +1091,8 @@ export default function App() {
   }, [currentSection]);
 
   return (
-    <ScaleWrapper>
-      <Background />
-
-      {currentSection !== 'home' && (
-        <div className="absolute inset-0 bg-black/35 pointer-events-none z-[5]" />
-      )}
+    <ScaleWrapper currentSection={currentSection}>
+      <Background currentSection={currentSection} />
       
       {/* Top Bar (Back Button only) */}
       <div
